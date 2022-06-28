@@ -1,3 +1,0 @@
-/home/pat/projet/sat-img-processing/build/CMakeFiles/rebuild_cache.dir
-/home/pat/projet/sat-img-processing/build/CMakeFiles/edit_cache.dir
-/home/pat/projet/sat-img-processing/build/CMakeFiles/prosatcimg.dir

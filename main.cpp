@@ -8,6 +8,10 @@
 #include <algorithm>
 #include <filesystem>
 
+
+
+
+
 int main(int argc, const char* argv[]) {
     
     if (argc < 2) {
@@ -39,6 +43,11 @@ int main(int argc, const char* argv[]) {
     std::string image = files.begin()->second;
     std::cout<<image<<"\n";
     
+    
+	cv::imshow( "Frame", frame );
+	// Press  ESC on keyboard to exit
+	char c=(char)cv::waitKey(1);
+	if(c==27) break;
     
     return 0;
 	
