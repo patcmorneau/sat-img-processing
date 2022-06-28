@@ -10,7 +10,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 add_executable(${PROJECT_NAME} main.cpp)
 
-find_package(OpenCV 4 REQUIRED)
+find_package(OpenCV 4.2 REQUIRED)
 
 target_link_libraries(${PROJECT_NAME} PUBLIC ${OpenCV_LIBS} )
 

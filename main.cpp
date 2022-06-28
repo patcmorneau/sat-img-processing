@@ -43,11 +43,11 @@ int main(int argc, const char* argv[]) {
     std::string image = files.begin()->second;
     std::cout<<image<<"\n";
     
-    
-	cv::imshow( "Frame", frame );
+    cv::Mat img = cv::imread(image);
+	cv::imshow( "Frame", img );
 	// Press  ESC on keyboard to exit
-	char c=(char)cv::waitKey(1);
-	if(c==27) break;
+	char c=(char)cv::waitKey(0);
+	if(c==27) cv::destroyAllWindows();
     
     return 0;
 	
