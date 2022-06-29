@@ -4,7 +4,7 @@
 mkdir build && cd build
 cmake ..
 make
-./prosatcimg
+./visualize ../data/R60m
 ```
 
 

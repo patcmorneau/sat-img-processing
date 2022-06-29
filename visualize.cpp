@@ -34,21 +34,22 @@ int main(int argc, const char* argv[]) {
 
 
     }
-    /*
+    
     for(auto &el : files){
-    	std::cout<<el.first<<" "<<el.second<<"\n";
+    	//std::cout<<el.first<<" "<<el.second<<"\n";
+    	std::string image = el.second;
+		std::cout<<image<<"\n";
+		
+		cv::Mat img = cv::imread(image);
+		std::cout<<img.size()<<"\n";
+		cv::resize(img, img, cv::Size(915, 915), cv::INTER_LINEAR);
+		
+		cv::imshow( "Frame", img );
+		// Press  ESC on keyboard to exit
+		char c=(char)cv::waitKey(0);
+		if(c==27) cv::destroyAllWindows();
     }
-    */
-    
-    std::string image = files.begin()->second;
-    std::cout<<image<<"\n";
-    
-    cv::Mat img = cv::imread(image);
-	cv::imshow( "Frame", img );
-	// Press  ESC on keyboard to exit
-	char c=(char)cv::waitKey(0);
-	if(c==27) cv::destroyAllWindows();
-    
+
     return 0;
 	
 }
