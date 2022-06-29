@@ -9,7 +9,25 @@
 #include <filesystem>
 
 
-
+std::string extract_band_name(std::string filename){
+	std::vector<std::string> bandNames{"B01","B02","B03","B04","B05","B06","B07","B08","B8A","B09","B10","B11","B12","B13","AOT","SCL","TCI","WVP"};
+	std::string bandName;
+	int checksum = 0;
+	for(int i =0; i<bandNames.size();++i){
+		if (filename.find(bandNames[i]) != std::string::npos){
+			++checksum;
+			bandName = bandNames[i];
+		}
+	}
+	if(checksum == 1){
+		return bandName;
+	}
+	else{
+		std::cerr<<"found "<< checksum <<" band name in " << filename<<"\n";
+		return filename;
+	}
+	
+}
 
 
 int main(int argc, const char* argv[]) {
@@ -28,15 +46,13 @@ int main(int argc, const char* argv[]) {
     {
         if (dir_entry.is_regular_file()){
 			std::filesystem::path filePath = dir_entry.path();
-			//std::cout<<filePath.filename()<<"\n";
-			files.insert({filePath.filename(), dir_entry.path()});
+			files.insert({extract_band_name(filePath.filename(), dir_entry.path()});
         }
 
 
     }
     
     for(auto &el : files){
-    	//std::cout<<el.first<<" "<<el.second<<"\n";
     	std::string image = el.second;
 		std::cout<<image<<"\n";
 		
