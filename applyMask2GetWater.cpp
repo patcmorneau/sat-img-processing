@@ -108,7 +108,7 @@ int main(int argc, const char* argv[]) {
 	cv::Mat scl = cv::imread(sclPath, 0);
 	double min, max;
 	cv::minMaxLoc(scl, &min, &max);
-	std::cout<<"min max "<< min<<"  "<<max<<"\n";
+	//std::cout<<"min max "<< min<<"  "<<max<<"\n";
 	
 	int sclMulti = 255 / max;
 	
