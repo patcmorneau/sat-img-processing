@@ -55,6 +55,38 @@ class Mass{
 		
 		}
 		
+		std::map<std::string,std::map<std::string,std::string>> get_all_files() {return this->resolutions;}
+		
+		cv::Mat generate_MNDWI_mask(cv::Mat b03, cv::Mat infrared){
+			
+			if(b03.size != infrared.size){
+				std::cerr<<"Band are not the same resolution \n";
+			}
+			else{
+				
+				int y = b03.size[0];
+				int x = b03.size[1];
+		
+				b03.convertTo(b03, CV_32FC1);
+				infrared.convertTo(infrared, CV_32FC1);
+				
+				cv::Mat MNDWI = (b03 - infrared) / (b03 + infrared);
+				
+				cv::Mat mask(cv::Size(y, x), CV_8UC1, cv::Scalar(0));
+				
+				for(int row = 0; row < MNDWI.rows; ++row){
+					for(int col = 0; col < MNDWI.cols; ++col){
+						float pixel = MNDWI.at<float>(row, col, 0);
+						if(pixel > 0){
+							mask.at<uchar>(row, col) = 255;
+						}
+					}
+				}
+				return mask;
+			}
+			//XXX no return
+		}
+		
 	private:
 		std::map<std::string,std::string> files;
 		std::map<std::string,std::map<std::string,std::string>> resolutions;
