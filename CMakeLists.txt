@@ -16,7 +16,6 @@ target_link_libraries(visualize PUBLIC ${OpenCV_LIBS} )
 add_executable(process src/processing_MNWI.cpp)
 target_link_libraries(process PUBLIC ${OpenCV_LIBS} )
 
-
 add_executable(getwater src/applyMask2GetWater.cpp)
 target_link_libraries(getwater PUBLIC ${OpenCV_LIBS} )
 

@@ -1,4 +1,4 @@
-#include "MASS.hpp"
+#include "SENTINEL.hpp"
 
 
 int main(int argc, const char* argv[]) {
@@ -10,8 +10,8 @@ int main(int argc, const char* argv[]) {
 	}
 	
 	std::string dirPath = argv[1];
-	Mass mass(dirPath);
-	auto resolutions = mass.get_all_files();
+	Sentinel sentinel(dirPath);
+	auto resolutions = sentinel.get_all_files();
 	
 	// visualize all images
 	

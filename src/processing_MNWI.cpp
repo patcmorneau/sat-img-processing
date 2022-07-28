@@ -1,4 +1,4 @@
-#include "MASS.hpp"
+#include "SENTINEL.hpp"
 
 std::string type2str(int type) {
   std::string r;
@@ -32,8 +32,8 @@ int main(int argc, const char* argv[]) {
 	}
 	
 	std::string dirPath = argv[1];
-	Mass mass(dirPath);
-	auto resolutions = mass.get_all_files();
+	Sentinel sentinel(dirPath);
+	auto resolutions = sentinel.get_all_files();
 	
 	
 	//access one image
@@ -80,7 +80,7 @@ int main(int argc, const char* argv[]) {
 	}
 	*/
 	
-	cv::Mat mask = mass.generate_MNDWI_mask(b03, b12);
+	cv::Mat mask = sentinel.generate_MNDWI_mask(b03, b12);
 	
 	
 	cv::resize(mask, mask, cv::Size(915, 915), cv::INTER_LINEAR);

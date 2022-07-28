@@ -1,5 +1,5 @@
-#ifndef MASS
-#define MASS
+#ifndef SENTINEL
+#define SENTINEL
 
 #include <iostream>
 #include "opencv2/opencv.hpp"
@@ -31,9 +31,9 @@ std::string extract_band_name(std::string filename){
 
 
 
-class Mass{
+class Sentinel{
 	public:
-		Mass(std::string dirPath){
+		Sentinel(std::string dirPath){
 			const std::filesystem::path path{dirPath};
 			for (auto const& dir_entry : std::filesystem::directory_iterator{path}){
 				if (dir_entry.is_directory()){
