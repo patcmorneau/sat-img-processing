@@ -84,10 +84,42 @@ class Sentinel{
 				}
 				return mask;
 			}
-			//XXX no return
+			//XXX warning no return
 		}
 		
-		//cv::Mat get_water()
+		cv::Mat extract_water(cv::Mat band){
+			//XXX check dimention in case of colored image ?
+			int y = band.size[0];
+			int x = band.size[1];
+			
+			//access images
+			auto paths = this->resolutions["R60m"];
+			std::string sclPath = paths["SCL"];
+			cv::Mat scl = cv::imread(sclPath, cv::IMREAD_LOAD_GDAL);
+			//XXX check matrix type
+			
+			cv::Mat mask(cv::Size(y, x), CV_8UC1, cv::Scalar(0));
+			
+			for(int row = 0; row < scl.rows; ++row){
+				for(int col = 0; col < scl.cols; ++col){
+					if(scl.at<uchar>(row, col, 0) == 6){ // 
+						mask.at<uchar>(row, col) = 255;
+					}
+					else{
+						mask.at<uchar>(row, col) = 0;
+					}
+				}
+			}
+			
+			mask.convertTo(mask, CV_16UC1);
+			
+			cv::Mat result(cv::Size(y, x), CV_16UC1, cv::Scalar(0));
+			
+			cv::bitwise_and(band, mask, result);
+			
+			
+			return result;
+		}
 		
 	private:
 		std::map<std::string,std::string> files;
