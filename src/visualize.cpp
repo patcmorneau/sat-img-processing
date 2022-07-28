@@ -4,7 +4,7 @@
 int main(int argc, const char* argv[]) {
     
     if (argc < 2) {
-		std::cerr << "usage: ./?? dirPath\n";
+		std::cerr << "usage: ./visualize dirPath\n";
 		std::cerr << "the directory must contain all directories of the different resolution\n";
 		return -1;
 	}
@@ -25,7 +25,7 @@ int main(int argc, const char* argv[]) {
 			std::cout<<img.size()<<"\n";
 			
 			cv::resize(img, img, cv::Size(915, 915), cv::INTER_LINEAR);
-			
+
 			cv::imshow( res.first + "/" + imgPath.first , img );
 			// Press  ESC on keyboard to exit
 			char c=(char)cv::waitKey(0);

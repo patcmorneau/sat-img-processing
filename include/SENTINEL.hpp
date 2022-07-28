@@ -66,14 +66,14 @@ class Sentinel{
 				
 				int y = b03.size[0];
 				int x = b03.size[1];
-		
+				
 				b03.convertTo(b03, CV_32FC1);
 				infrared.convertTo(infrared, CV_32FC1);
-				
+
 				cv::Mat MNDWI = (b03 - infrared) / (b03 + infrared);
-				
+
 				cv::Mat mask(cv::Size(y, x), CV_8UC1, cv::Scalar(0));
-				
+
 				for(int row = 0; row < MNDWI.rows; ++row){
 					for(int col = 0; col < MNDWI.cols; ++col){
 						float pixel = MNDWI.at<float>(row, col, 0);
@@ -86,6 +86,8 @@ class Sentinel{
 			}
 			//XXX no return
 		}
+		
+		//cv::Mat get_water()
 		
 	private:
 		std::map<std::string,std::string> files;

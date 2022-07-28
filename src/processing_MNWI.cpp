@@ -43,6 +43,9 @@ int main(int argc, const char* argv[]) {
 	
 	cv::Mat b03 = cv::imread(b03Path, 0);
 	cv::Mat b12 = cv::imread(b12Path, 0);
+	
+	
+	
 	/*
 	cv::Mat b03;
 	cv::Mat b12;
@@ -81,7 +84,6 @@ int main(int argc, const char* argv[]) {
 	*/
 	
 	cv::Mat mask = sentinel.generate_MNDWI_mask(b03, b12);
-	
 	
 	cv::resize(mask, mask, cv::Size(915, 915), cv::INTER_LINEAR);
 	cv::imshow( "mask" , mask );
