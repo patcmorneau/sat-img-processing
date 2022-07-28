@@ -4,9 +4,9 @@
 mkdir build && cd build
 cmake ..
 make
-./visualize ../data/R60m
-./process ../data/R60m
-./getwater ../data/R60m
+./visualize ../data/
+./process ../data/
+./getwater ../data/
 ```
 
 

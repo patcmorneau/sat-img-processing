@@ -39,7 +39,7 @@ void get_pixel_value(int action, int x, int y, int flags, void *userdata){
 int main(int argc, const char* argv[]) {
     
     if (argc < 2) {
-		std::cerr << "usage: ./process dirPath\n";
+		std::cerr << "usage: ./getWater dirPath\n";
 		std::cerr << "the directory must contain all directories of the different resolution\n";
 		return -1;
 	}
@@ -49,17 +49,23 @@ int main(int argc, const char* argv[]) {
 	auto resolutions = sentinel.get_all_files();
 	
 	
-	//access image
+	//access images
 	auto paths = resolutions["R60m"];
 	std::string sclPath = paths["SCL"];
 	std::string b04Path = paths["B04"];
 	
 	cv::Mat b04 = cv::imread(b04Path, 0);
 	
+	std::cout<<b04<<"\n";
+	
 	cv::Mat scl = cv::imread(sclPath, 0);
 	double min, max;
 	cv::minMaxLoc(scl, &min, &max);
-	//std::cout<<"min max "<< min<<"  "<<max<<"\n";
+	std::cout<<"scl min max "<< min<<"  "<<max<<"\n"; // each pixel is classified between 0 and 11 
+	//std::cout<<type2str(scl.type())<<"\n";
+	//std::cout<<type2str(b04.type())<<"\n";
+	
+	
 	
 	int sclMulti = 255 / max;
 	
@@ -70,11 +76,12 @@ int main(int argc, const char* argv[]) {
 			scl.at<uchar>(row, col) = pixel * sclMulti;
 		}
 	}
-
 	
-	double b04Max;
-	cv::minMaxLoc(b04, &min, &b04Max);
+	
+	double b04Max, b04Min;
+	cv::minMaxLoc(b04, &b04Min, &b04Max);
 	int multiplicator = 255 / b04Max;
+	std::cout<<"b04 min max "<< b04Min<<"  "<<b04Max<<"\n";
 	
 	//TODO mat iterator
 	for(int row = 0; row < b04.rows; ++row){
@@ -91,7 +98,7 @@ int main(int argc, const char* argv[]) {
 	
 	for(int row = 0; row < scl.rows; ++row){
 		for(int col = 0; col < scl.cols; ++col){
-			if(scl.at<uchar>(row, col, 0) == 138){
+			if(scl.at<uchar>(row, col, 0) == 138){ // 
 				mask.at<uchar>(row, col) = 255;
 			}
 			else{
@@ -101,6 +108,7 @@ int main(int argc, const char* argv[]) {
 	}
 	
 	cv::Mat result(cv::Size(1830, 1830), CV_8UC1, cv::Scalar(0));
+	
 	/*
 	std::cout<<b04.size<<"\n"<<mask.size<<"\n"<<result.size<<"\n"<<scl.size<<"\n";
 	std::cout<<type2str(b04.type())<<"\n";
@@ -108,7 +116,11 @@ int main(int argc, const char* argv[]) {
 	std::cout<<type2str(result.type())<<"\n";
 	std::cout<<type2str(scl.type())<<"\n";
 	*/
+	
 	cv::bitwise_and(b04,mask,result);
+	
+	//std::cout<<result<<"\n";
+	
 	
 	
 	//cv::namedWindow("mask");
@@ -128,7 +140,7 @@ int main(int argc, const char* argv[]) {
 	// Press  ESC on keyboard to exit
 	char c=(char)cv::waitKey(0);
 	if(c==27) cv::destroyAllWindows();
-
+	
     return 0;
 	
 }
