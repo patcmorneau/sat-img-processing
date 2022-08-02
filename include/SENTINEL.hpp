@@ -60,7 +60,7 @@ class Sentinel{
 		cv::Mat generate_MNDWI_mask(cv::Mat b03, cv::Mat infrared){
 			
 			if(b03.size != infrared.size){
-				std::cerr<<"Band are not the same resolution \n";
+				std::cerr<<"Bands are not the same resolution \n";
 			}
 			else{
 				
@@ -94,6 +94,8 @@ class Sentinel{
 			
 			//access images
 			auto paths = this->resolutions["R60m"];
+			// https://docs.sentinel-hub.com/api/latest/data/sentinel-2-l2a/#units
+			// scl bad is classified from 0 to 11. 6 is water.
 			std::string sclPath = paths["SCL"];
 			cv::Mat scl = cv::imread(sclPath, cv::IMREAD_LOAD_GDAL);
 			//XXX check matrix type
@@ -102,7 +104,7 @@ class Sentinel{
 			
 			for(int row = 0; row < scl.rows; ++row){
 				for(int col = 0; col < scl.cols; ++col){
-					if(scl.at<uchar>(row, col, 0) == 6){ // 
+					if(scl.at<uchar>(row, col, 0) == 6){ 
 						mask.at<uchar>(row, col) = 255;
 					}
 					else{

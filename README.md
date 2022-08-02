@@ -4,9 +4,10 @@
 mkdir build && cd build
 cmake ..
 make
-./visualize ../data/
-./process ../data/
-./getwater ../data/
+./visualize ../data/sat-imgs
+./process ../data/sat-imgs
+./getwater ../data/sat-imgs
+./depth ../data/sat-imgs
 ```
 
 

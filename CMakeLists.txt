@@ -19,3 +19,10 @@ target_link_libraries(process PUBLIC ${OpenCV_LIBS} )
 add_executable(getwater src/applyMask2GetWater.cpp)
 target_link_libraries(getwater PUBLIC ${OpenCV_LIBS} )
 
+add_executable(depth src/depth.cpp)
+find_package(PCL 1.3 REQUIRED)
+include_directories(${PCL_INCLUDE_DIRS})
+link_directories(${PCL_LIBRARY_DIRS})
+add_definitions(${PCL_DEFINITIONS})
+target_link_libraries(depth PUBLIC ${OpenCV_LIBS} ${PCL_LIBRARIES})
+

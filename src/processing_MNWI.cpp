@@ -45,44 +45,6 @@ int main(int argc, const char* argv[]) {
 	cv::Mat b12 = cv::imread(b12Path, 0);
 	
 	
-	
-	/*
-	cv::Mat b03;
-	cv::Mat b12;
-	
-	b03T.convertTo(b03, CV_32FC1);
-	b12T.convertTo(b12, CV_32FC1);
-	
-	std::cout<<"B03 : " << b03.dims<<"\n";
-	std::cout<<type2str(b03.type())<<"\n";
-	double min, max;
-	cv::minMaxLoc(b03, &min, &max);
-	std::cout<<"min max "<< min<<"  "<<max<<"\n";
-	
-	std::cout<<"B12 : " << b12.dims<<"\n";
-	std::cout<<type2str(b12.type())<<"\n";
-	cv::minMaxLoc(b12, &min, &max);
-	std::cout<<"min max "<< min<<"  "<<max<<"\n";
-	
-
-	cv::Mat MNDWI = (b03 - b12) / (b03 + b12);
-	std::cout<<"MNDWI : " << MNDWI.dims<<"\n";
-	cv::minMaxLoc(MNDWI, &min, &max);
-	std::cout<<"min max "<< min<<"  "<<max<<"\n";
-	
-	//TODO get size from image
-	cv::Mat mask(cv::Size(1830, 1830), CV_8UC1, cv::Scalar(0));
-	
-	for(int row = 0; row < MNDWI.rows; ++row){
-		for(int col = 0; col < MNDWI.cols; ++col){
-			float pixel = MNDWI.at<float>(row, col, 0);
-			if(pixel > 0){
-				mask.at<uchar>(row, col) = 255;
-			}
-		}
-	}
-	*/
-	
 	cv::Mat mask = sentinel.generate_MNDWI_mask(b03, b12);
 	
 	cv::resize(mask, mask, cv::Size(915, 915), cv::INTER_LINEAR);
