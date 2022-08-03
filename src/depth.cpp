@@ -143,6 +143,35 @@ int main(int argc, const char* argv[]) {
 	
 	readFileXYZ("../data/points/bella_desGagnes.xyz", cloud);
 	
+	pcl::KdTreeFLANN<pcl::PointXYZ> kdtree;
+	kdtree.setInputCloud (cloud);
+	
+	// get point with depth between 3m and 20m
+	for(unsigned int i = 0; i < cloud->points.size(); i++){
+		
+		
+		if(cloud->points[i].z >= 3 && cloud->points[i].z < 20){
+			
+			std::cout<<"depth : " << cloud->points[i].z <<"\n";
+			
+			std::vector<int> pointIndex;
+			std::vector<float> distances; //squared
+			
+			if ( kdtree.nearestKSearch(cloud->points[i], 10, pointIndex, distances) > 0 ){
+				// check if area is about flat
+				double averageDepth = 0;
+				for(int j = 0; j < pointIndex.size(); ++j){
+					averageDepth += cloud->points[pointIndex[j]].z;
+				}
+				averageDepth = averageDepth/pointIndex.size();
+				std::cout<<"avg : " << averageDepth<<"\n";
+			}		
+			
+		}
+		
+	}
+	
+	
 	//std::vector<std::vector<double>> xyzImage;
 	//std::vector<double> xyz;
 	
