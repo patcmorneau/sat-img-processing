@@ -14,35 +14,69 @@ if len(sys.argv) != 2:
 directory = sys.argv[1]
 
 
-allFilesAtGoodTime = []
+allFiles = []
+"""
+for date in dates:
+
+	fileInGoodTimeRange = []
+	
+	for File in os.listdir(directory):
+		#print(File)
+		if date in File:
+			try:
+				time = int(File[11:17])
+			except ValueError:
+				continue;
+			if time > deltaTime[0] and time < deltaTime[1]:
+				fileInGoodTimeRange.append(File)
+	
+	if len(fileInGoodTimeRange) > 0:
+		allFiles.append(fileInGoodTimeRange)
+
+#print(allFiles)
+
+for package in allFiles:
+	package.sort()
+	print(package)
+	
+"""
+packageByDateTime = {}
 
 for File in os.listdir(directory):
-	#print(File)
-	#print(File[11:17])
+
+	if File[-3:] == "ubx":
+		#print("skip")
+		continue;
+
 	try:
 		time = int(File[11:17])
 	except ValueError:
 		continue;
 	if time > deltaTime[0] and time < deltaTime[1]:
-		allFilesAtGoodTime.append(File)
+		for date in dates:
+			if date in File:
+				dateTime = date + str(time)
+				fileType = File[18:21]
+				pos = 3
+				
+				if fileType == "gns":
+					pos = 0
+				elif fileType == "imu":
+					pos = 1
+				elif fileType == "son":
+					pos = 2
 
-
-
-allFiles = []
-
-for date in dates:
-
-	threeFilePackage = []
+				package = ["0","1","2"]
+				
+				if dateTime not in packageByDateTime:
+					package[pos] = File
+					packageByDateTime[dateTime] = package
+				else:
+					package = packageByDateTime[dateTime]
+					package[pos] = File
+					packageByDateTime[dateTime] = package
 	
-	for File in allFilesAtGoodTime:
-		#print(File)
-		if date in File:
-		
-			threeFilePackage.append(File)
-			
-	allFiles.append(threeFilePackage)
+print(packageByDateTime)
 
-#print(allFiles)
 
-for package in allFiles:
-	print(package)
+
