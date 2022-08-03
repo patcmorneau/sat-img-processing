@@ -1,4 +1,4 @@
-import sys, os
+import sys, os, shutil
 
 
 # may to august dates
@@ -78,5 +78,11 @@ for File in os.listdir(directory):
 	
 print(packageByDateTime)
 
+outputPath = "/home/pat/Documents/linux_virt_share/bella"
 
+for key in packageByDateTime.keys():
+	package = packageByDateTime[key]
+	for File in package:
+		print(package)
+		shutil.move(os.path.join(directory, File), os.path.join(outputPath, File))
 
