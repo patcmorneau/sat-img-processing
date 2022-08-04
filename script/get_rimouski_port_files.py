@@ -1,4 +1,5 @@
-import sys, os, shutil
+import sys, os, shutil, subprocess
+from tqdm import tqdm
 
 
 # may to august dates
@@ -14,32 +15,6 @@ if len(sys.argv) != 2:
 directory = sys.argv[1]
 
 
-allFiles = []
-"""
-for date in dates:
-
-	fileInGoodTimeRange = []
-	
-	for File in os.listdir(directory):
-		#print(File)
-		if date in File:
-			try:
-				time = int(File[11:17])
-			except ValueError:
-				continue;
-			if time > deltaTime[0] and time < deltaTime[1]:
-				fileInGoodTimeRange.append(File)
-	
-	if len(fileInGoodTimeRange) > 0:
-		allFiles.append(fileInGoodTimeRange)
-
-#print(allFiles)
-
-for package in allFiles:
-	package.sort()
-	print(package)
-	
-"""
 packageByDateTime = {}
 
 for File in os.listdir(directory):
@@ -75,7 +50,7 @@ for File in os.listdir(directory):
 					package = packageByDateTime[dateTime]
 					package[pos] = File
 					packageByDateTime[dateTime] = package
-	
+"""	
 print(packageByDateTime)
 
 outputPath = "/home/pat/Documents/linux_virt_share/bella"
@@ -85,4 +60,17 @@ for key in packageByDateTime.keys():
 	for File in package:
 		print(package)
 		shutil.move(os.path.join(directory, File), os.path.join(outputPath, File))
+"""
+
+output = "/home/pat/projet/sat-img-processing/data/points/test.xyz" # TODO make it a param
+parserPath = "" # TODO make it a param
+
+for key in tqdm(packageByDateTime.keys()):
+	print(key)
+	package = packageByDateTime[key]
+	gnss = os.path.join(directory, package[0])
+	imu = os.path.join(directory, package[1])
+	sonar = os.path.join(directory, package[2])
+	p = subprocess.Popen('./../../MBES-lib/build/bin/hb-parser {} {} {} >> {}'.format(gnss, imu, sonar, output) , shell='True')
+	p.wait()
 
